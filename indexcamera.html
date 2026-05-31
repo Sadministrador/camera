@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Meu App de Telepresença</title>
+<style>
+body{
+    margin:0;
+    background:black;
+    text-align:center;
+}
+video{
+    width:100%;
+    max-width:600px;
+    margin-top:20px;
+    border-radius:10px;
+}
+h1{
+    color:white;
+}
+</style>
+</head>
+<body>
+
+<h1>Telepresença AR</h1>
+
+<video id="video" autoplay playsinline></video>
+
+<script>
+async function iniciarCamera() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video:true,
+            audio:true
+        });
+
+        document.getElementById("video").srcObject = stream;
+    } catch(err) {
+        alert("Erro ao acessar câmera");
+    }
+}
+
+iniciarCamera();
+</script>
+
+</body>
+</html>
