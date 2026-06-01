@@ -4,113 +4,132 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Telepresença AR</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Syne',sans-serif;color:#fff}
+:root{
+  --bg:#06060E;--s1:#0C0C1A;--s2:#10101E;--s3:#161628;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --accent:#5B5FEE;--accent2:#7B7FF0;--accent3:#A5A8FF;
+  --green:#10B981;--red:#EF4444;--yellow:#F59E0B;
+  --text:#F0F0FF;--muted:rgba(200,200,255,0.45);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text)}
 
-/* ── TELA CADASTRO ── */
-#sCad{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#07070f;z-index:10;overflow-y:auto}
-.cad-box{width:100%;max-width:340px;padding:32px 24px;text-align:center}
-.cad-icon{font-size:56px;margin-bottom:20px;display:block}
-.cad-box h1{font-size:26px;font-weight:700;background:linear-gradient(135deg,#a89bff,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.cad-box p{font-size:13px;color:rgba(200,200,255,0.45);margin-bottom:32px;line-height:1.6}
-.inp{width:100%;padding:15px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(120,120,255,0.18);border-radius:14px;color:#fff;font-size:16px;font-family:'Syne',sans-serif;outline:none;margin-bottom:14px;transition:border-color .2s}
-.inp:focus{border-color:rgba(120,120,255,0.55)}
+/* ── CADASTRO ── */
+#sCad{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:20;overflow-y:auto}
+.cad-box{width:100%;max-width:360px;padding:40px 28px;text-align:center}
+.cad-logo{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--accent),var(--accent3));display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 28px}
+.cad-box h1{font-size:28px;font-weight:600;letter-spacing:-0.5px;margin-bottom:8px}
+.cad-box p{font-size:14px;color:var(--muted);margin-bottom:36px;line-height:1.6}
+.inp{width:100%;padding:14px 16px;background:var(--s2);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:12px;transition:border-color .2s}
+.inp:focus{border-color:var(--accent2)}
 .inp::placeholder{color:rgba(255,255,255,0.2)}
-.btn-cad{width:100%;padding:15px;background:linear-gradient(135deg,#6366f1,#818cf8);border:none;border-radius:14px;color:#fff;font-size:16px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:6px}
-.btn-cad:active{opacity:.8}
+.btn-cad{width:100%;padding:15px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s;margin-top:4px}
+.btn-cad:hover:not(:disabled){background:var(--accent2)}
+.btn-cad:active{transform:scale(.98)}
 .btn-cad:disabled{opacity:.4;cursor:not-allowed}
 
-/* ── TELA AGUARDA ── */
-#sAgu{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#07070f;z-index:10;flex-direction:column;text-align:center;padding:32px}
-.agu-ring{width:96px;height:96px;border-radius:50%;border:2px solid rgba(99,102,241,0.5);display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 28px;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,0.5)}50%{box-shadow:0 0 0 24px rgba(99,102,241,0)}}
-.agu-title{font-size:22px;font-weight:700;margin-bottom:10px}
-.agu-sub{font-size:14px;color:rgba(200,200,255,0.45);line-height:1.8;margin-bottom:24px}
-.btn-cancel{padding:11px 24px;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:rgba(255,255,255,0.45);font-size:13px;font-family:'Syne',sans-serif;cursor:pointer}
+/* ── AGUARDA ── */
+#sAgu{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:var(--bg);z-index:20;flex-direction:column;text-align:center;padding:40px}
+.agu-pulse{width:88px;height:88px;border-radius:50%;background:rgba(91,95,238,0.1);border:1px solid rgba(91,95,238,0.3);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 28px;animation:agupulse 2s ease-in-out infinite}
+@keyframes agupulse{0%,100%{box-shadow:0 0 0 0 rgba(91,95,238,0.4)}50%{box-shadow:0 0 0 28px rgba(91,95,238,0)}}
+.agu-title{font-size:22px;font-weight:600;margin-bottom:10px}
+.agu-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:28px}
+.btn-cancel{padding:10px 24px;background:transparent;border:1px solid var(--border2);border-radius:10px;color:var(--muted);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
+.btn-cancel:hover{border-color:var(--red);color:var(--red)}
 
-/* ── TELA PRINCIPAL ── */
+/* ── PRINCIPAL ── */
 #sMain{position:absolute;inset:0;display:none;flex-direction:column;background:#000}
 
+/* ── TOP BAR ── */
+.top-bar{background:rgba(6,6,14,0.95);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;backdrop-filter:blur(12px);z-index:10}
+.top-left{display:flex;align-items:center;gap:10px}
+.top-av{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent3));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.top-name{font-size:14px;font-weight:500}
+.top-code{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.top-right{display:flex;align-items:center;gap:10px}
+.dot-on{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 8px rgba(16,185,129,0.8)}
+.btn-sair{background:none;border:1px solid var(--border2);border-radius:8px;color:var(--muted);font-size:12px;padding:6px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-sair:hover{border-color:var(--red);color:var(--red)}
+
 /* ── GRADE DE VÍDEO ── */
-#videoGrid{flex:1;display:grid;gap:2px;background:#0a0a0a;overflow:hidden;position:relative}
+#videoGrid{flex:1;display:grid;background:#000;overflow:hidden;gap:2px;position:relative}
 #videoGrid.g1{grid-template-columns:1fr;grid-template-rows:1fr}
 #videoGrid.g2{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
 #videoGrid.g3{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+#videoGrid.g3 .v-tile:first-child{grid-column:1 / -1}
 #videoGrid.g4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
 #videoGrid.g5{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
+#videoGrid.g5 .v-tile:first-child{grid-column:1 / span 2}
 #videoGrid.g6{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr}
 #videoGrid.g7{grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr}
+#videoGrid.g7 .v-tile:first-child{grid-column:1 / span 2}
 #videoGrid.g8{grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr}
 
-.v-tile{position:relative;background:#0d0d1e;overflow:hidden;min-height:80px}
+.v-tile{position:relative;background:#0A0A16;overflow:hidden}
 .v-tile video{width:100%;height:100%;object-fit:cover;display:block}
 .v-tile.self video{transform:scaleX(-1)}
-.v-tile-label{position:absolute;bottom:8px;left:10px;font-size:11px;background:rgba(0,0,0,0.7);padding:3px 10px;border-radius:20px;color:#fff;font-family:'Syne',sans-serif;white-space:nowrap;overflow:hidden;max-width:92%;backdrop-filter:blur(4px)}
-.v-tile-av{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#0d0d1e}
-.av-circle{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#818cf8);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;letter-spacing:1px}
-.av-nm{font-size:12px;color:rgba(255,255,255,0.5)}
+.v-tile-label{position:absolute;bottom:8px;left:8px;font-size:11px;font-weight:500;background:rgba(0,0,0,0.7);padding:4px 10px;border-radius:20px;color:#fff;white-space:nowrap;max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(8px)}
+.v-tile-av{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#0A0A16}
+.av-circle{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;letter-spacing:0.5px}
+.av-nm{font-size:12px;color:var(--muted)}
 
 /* ── INCOMING CALL ── */
-#incomingCall{position:absolute;inset:0;background:rgba(5,5,20,0.97);z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;gap:20px}
-.ic-ring{width:110px;height:110px;border-radius:50%;border:3px solid #22c55e;display:flex;align-items:center;justify-content:center;font-size:44px;animation:icRing 0.6s ease-in-out infinite alternate}
-@keyframes icRing{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.6),0 0 0 0 rgba(34,197,94,0.3)}100%{box-shadow:0 0 0 20px rgba(34,197,94,0.1),0 0 0 40px rgba(34,197,94,0)}}
-.ic-name{font-size:22px;font-weight:700;margin-top:8px}
-.ic-sub{font-size:14px;color:rgba(255,255,255,0.45)}
-.ic-btns{display:flex;gap:24px;margin-top:12px}
-.ic-btn{width:72px;height:72px;border-radius:50%;border:none;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
-.ic-btn:active{transform:scale(.9)}
-.ic-btn.answer{background:#22c55e}
-.ic-btn.reject{background:#ef4444}
+#incomingCall{position:absolute;inset:0;background:rgba(4,4,12,0.97);z-index:40;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;gap:24px}
+.ic-avatar{width:100px;height:100px;border-radius:28px;background:linear-gradient(135deg,var(--accent),var(--accent3));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:600;animation:icring 0.7s ease-in-out infinite alternate;position:relative}
+.ic-avatar::after{content:'';position:absolute;inset:-6px;border-radius:34px;border:2px solid var(--green);animation:icring2 0.7s ease-in-out infinite alternate}
+@keyframes icring{0%{transform:scale(1)}100%{transform:scale(1.05)}}
+@keyframes icring2{0%{opacity:1;inset:-6px}100%{opacity:0.3;inset:-14px}}
+.ic-name{font-size:24px;font-weight:600;letter-spacing:-0.3px}
+.ic-sub{font-size:14px;color:var(--muted)}
+.ic-btns{display:flex;gap:28px;margin-top:8px}
+.ic-btn{width:68px;height:68px;border-radius:50%;border:none;font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,filter .15s}
+.ic-btn:active{transform:scale(.88)}
+.ic-btn.answer{background:var(--green)}
+.ic-btn.reject{background:var(--red)}
 
-/* ── TOP BAR ── */
-.top-bar{background:rgba(7,7,15,0.95);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(120,120,255,0.12);flex-shrink:0;z-index:10;backdrop-filter:blur(8px)}
-.top-user{display:flex;align-items:center;gap:10px}
-.top-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#818cf8);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.top-name{font-size:14px;font-weight:600}
-.top-code{font-size:11px;color:rgba(255,255,255,0.45);font-family:'Space Mono',monospace}
-.dot-online{width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;box-shadow:0 0 6px rgba(34,197,94,0.8)}
-.btn-sair{background:none;border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:rgba(255,255,255,0.4);font-size:11px;padding:6px 12px;cursor:pointer;font-family:'Syne',sans-serif}
-
-/* ── BARRA INFERIOR ── */
-.bottom-bar{background:rgba(7,7,15,0.95);border-top:1px solid rgba(120,120,255,0.12);padding:12px 16px;flex-shrink:0;z-index:10;backdrop-filter:blur(8px)}
-
-/* ── DISCAGEM ── */
-#dialBox{display:block}
-.dial-label{font-size:11px;color:rgba(200,200,255,0.4);text-align:center;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
-.dial-row{display:flex;gap:10px;align-items:center}
-.dial-inp{flex:1;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(120,120,255,0.2);border-radius:12px;color:#fff;font-size:26px;font-family:'Space Mono',monospace;font-weight:700;outline:none;text-align:center;letter-spacing:6px}
-.dial-inp::placeholder{font-size:14px;letter-spacing:0;color:rgba(255,255,255,0.18);font-family:'Syne',sans-serif;font-weight:400}
-.btn-dial{padding:12px 20px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:12px;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0;transition:opacity .2s}
-.btn-dial:active{opacity:.8}
-
-/* ── CHAMADA ATIVA ── */
-#callBar{display:none;flex-direction:column;gap:10px}
-.call-info{display:flex;align-items:center;justify-content:space-between}
-.call-with{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
-.call-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:blink 1.5s infinite;flex-shrink:0}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.call-timer{font-family:'Space Mono',monospace;font-size:13px;color:rgba(255,255,255,0.45)}
-.call-btns{display:flex;gap:12px;justify-content:center}
-.cbtn{width:56px;height:56px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;transition:opacity .2s,transform .15s}
-.cbtn:active{transform:scale(.9)}
-.cbtn.mic{background:rgba(255,255,255,0.12)}
-.cbtn.cam{background:rgba(255,255,255,0.12)}
-.cbtn.end{background:#ef4444}
-.cbtn.off{background:rgba(255,255,255,0.06);opacity:.45}
-
-/* ── NOTIFICAÇÃO NÚMERO ── */
-#numNotify{position:absolute;top:70px;left:50%;transform:translateX(-50%);background:rgba(13,13,31,0.97);border:1px solid rgba(99,102,241,0.5);border-radius:16px;padding:16px 22px;z-index:20;text-align:center;display:none;min-width:240px;box-shadow:0 8px 40px rgba(0,0,0,.6);backdrop-filter:blur(12px)}
-.nn-title{font-size:12px;color:rgba(200,200,255,0.5);margin-bottom:8px}
-.nn-code{font-size:40px;font-weight:700;font-family:'Space Mono',monospace;color:#a89bff;letter-spacing:6px;margin-bottom:14px}
+/* ── NOTIF NÚMERO ── */
+#numNotify{position:absolute;top:68px;left:50%;transform:translateX(-50%);background:rgba(12,12,26,0.98);border:1px solid rgba(91,95,238,0.4);border-radius:18px;padding:20px 24px;z-index:30;text-align:center;display:none;min-width:260px;box-shadow:0 12px 48px rgba(0,0,0,0.7);backdrop-filter:blur(16px)}
+.nn-title{font-size:12px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.8px}
+.nn-code{font-size:44px;font-weight:500;font-family:'DM Mono',monospace;color:var(--accent3);letter-spacing:4px;margin-bottom:16px}
 .nn-btns{display:flex;gap:10px;justify-content:center}
-.nn-btn{padding:10px 20px;border-radius:10px;border:none;font-size:14px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer}
-.nn-btn.accept{background:#22c55e;color:#fff}
-.nn-btn.dismiss{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4)}
+.nn-btn{padding:10px 22px;border-radius:10px;border:none;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s}
+.nn-btn.accept{background:var(--green);color:#fff}.nn-btn.accept:hover{filter:brightness(1.1)}
+.nn-btn.dismiss{background:rgba(255,255,255,0.07);color:var(--muted);border:1px solid var(--border2)}.nn-btn.dismiss:hover{background:rgba(255,255,255,0.1)}
+
+/* ── BOTTOM BAR ── */
+.bottom-bar{background:rgba(6,6,14,0.97);border-top:1px solid var(--border);padding:14px 16px;flex-shrink:0;backdrop-filter:blur(12px);z-index:10}
+
+/* DIAL */
+#dialBox{}
+.dial-label{font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.8px}
+.dial-row{display:flex;gap:10px;align-items:center}
+.dial-inp{flex:1;padding:13px 16px;background:var(--s2);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:28px;font-family:'DM Mono',monospace;font-weight:500;outline:none;text-align:center;letter-spacing:6px;transition:border-color .2s}
+.dial-inp:focus{border-color:var(--accent2)}
+.dial-inp::placeholder{font-size:14px;letter-spacing:0;color:rgba(255,255,255,0.15);font-family:'DM Sans',sans-serif;font-weight:400}
+.btn-dial{padding:13px 22px;background:var(--green);border:none;border-radius:12px;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0;transition:all .2s}
+.btn-dial:hover{filter:brightness(1.1)}
+.btn-dial:active{transform:scale(.95)}
+
+/* CALL BAR */
+#callBar{display:none;flex-direction:column;gap:12px}
+.call-info{display:flex;align-items:center;justify-content:space-between}
+.call-who{font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;max-width:70%;overflow:hidden}
+.call-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.call-timer{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted)}
+.call-btns{display:flex;gap:14px;justify-content:center}
+.cbtn{width:54px;height:54px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;transition:all .2s}
+.cbtn:active{transform:scale(.88)}
+.cbtn.mic{background:rgba(255,255,255,0.1)}
+.cbtn.cam{background:rgba(255,255,255,0.1)}
+.cbtn.end{background:var(--red)}
+.cbtn.off{background:rgba(255,255,255,0.04);opacity:.4}
+.cbtn:hover{filter:brightness(1.15)}
 
 /* ── TOAST ── */
-#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-80px);background:rgba(13,13,31,0.97);border:1px solid rgba(120,120,255,0.3);border-radius:14px;padding:11px 22px;font-size:13px;z-index:999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;backdrop-filter:blur(12px)}
+#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-100px);background:rgba(12,12,26,0.98);border:1px solid var(--border2);border-radius:14px;padding:11px 22px;font-size:13px;z-index:999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;backdrop-filter:blur(16px);max-width:90vw;overflow:hidden;text-overflow:ellipsis}
 #toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
@@ -119,9 +138,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Sy
 <!-- CADASTRO -->
 <div id="sCad">
   <div class="cad-box">
-    <span class="cad-icon">📡</span>
-    <h1>Telepresença AR</h1>
-    <p>Cadastre-se para receber seu<br>número de acesso</p>
+    <div class="cad-logo">📡</div>
+    <h1>Telepresença</h1>
+    <p>Entre com seus dados para<br>solicitar acesso à sala</p>
     <input class="inp" id="iNome" type="text" placeholder="Seu nome completo" autocomplete="off"/>
     <input class="inp" id="iTel" type="tel" placeholder="Seu telefone" autocomplete="off"/>
     <button class="btn-cad" id="btnCad" onclick="cadastrar()">Solicitar acesso</button>
@@ -130,38 +149,38 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Sy
 
 <!-- AGUARDANDO -->
 <div id="sAgu">
-  <div class="agu-ring">⏳</div>
+  <div class="agu-pulse">⏳</div>
   <div class="agu-title">Aguardando aprovação</div>
-  <div class="agu-sub">Seu cadastro foi enviado ao monitor.<br>Em breve você será liberado.</div>
+  <div class="agu-sub">Seu cadastro foi enviado ao monitor.<br>Em breve você será liberado para entrar.</div>
   <button class="btn-cancel" onclick="cancelarCad()">Cancelar</button>
 </div>
 
 <!-- PRINCIPAL -->
 <div id="sMain">
 
-  <!-- TOP BAR -->
+  <!-- TOP -->
   <div class="top-bar">
-    <div class="top-user">
+    <div class="top-left">
       <div class="top-av" id="topAv">?</div>
       <div>
         <div class="top-name" id="topNome">—</div>
         <div class="top-code" id="topCod">#—</div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <div class="dot-online"></div>
+    <div class="top-right">
+      <div class="dot-on"></div>
       <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
   </div>
 
-  <!-- GRADE DE VÍDEO -->
+  <!-- GRADE -->
   <div id="videoGrid" class="g1"></div>
 
   <!-- INCOMING CALL -->
   <div id="incomingCall">
-    <div class="ic-ring">📲</div>
+    <div class="ic-avatar" id="icAv">?</div>
     <div class="ic-name" id="icName">—</div>
-    <div class="ic-sub">Chamada recebida</div>
+    <div class="ic-sub">Ligação recebida</div>
     <div class="ic-btns">
       <button class="ic-btn answer" onclick="aceitarChamada()">✅</button>
       <button class="ic-btn reject" onclick="rejeitarChamada()">❌</button>
@@ -170,7 +189,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Sy
 
   <!-- NÚMERO DO MONITOR -->
   <div id="numNotify">
-    <div class="nn-title">📩 Monitor enviou um número:</div>
+    <div class="nn-title">Monitor enviou um número</div>
     <div class="nn-code" id="nnCode">—</div>
     <div class="nn-btns">
       <button class="nn-btn accept" onclick="aceitarNumero()">📞 Ligar</button>
@@ -178,19 +197,19 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Sy
     </div>
   </div>
 
-  <!-- BARRA INFERIOR -->
+  <!-- BOTTOM -->
   <div class="bottom-bar">
     <div id="dialBox">
       <div class="dial-label">Digite o código para ligar (1 – 100)</div>
       <div class="dial-row">
-        <input class="dial-inp" id="dialInp" type="number" min="1" max="100" placeholder="42"
+        <input class="dial-inp" id="dialInp" type="number" min="1" max="100" placeholder="Código..."
                onkeydown="if(event.key==='Enter')discar()"/>
         <button class="btn-dial" onclick="discar()">📞</button>
       </div>
     </div>
     <div id="callBar">
       <div class="call-info">
-        <div class="call-with"><div class="call-dot"></div><span id="callComQuem">—</span></div>
+        <div class="call-who"><div class="call-dot"></div><span id="callComQuem" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">—</span></div>
         <div class="call-timer" id="callTimer">00:00</div>
       </div>
       <div class="call-btns">
@@ -210,7 +229,9 @@ import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/fireb
 import { getDatabase, ref, set, get, push, onValue, remove, update, off }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// ══════════════════════════════════════════════════
+/* ════════════════════════════════════════
+   CONFIGURAÇÃO FIREBASE — altere aqui
+   ════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey:            "COLE_SUA_APIKEY_AQUI",
   authDomain:        "dieta-monitorada-b9500.firebaseapp.com",
@@ -220,193 +241,193 @@ const firebaseConfig = {
   messagingSenderId: "COLE_SEU_SENDERID_AQUI",
   appId:             "COLE_SEU_APPID_AQUI"
 };
-// ══════════════════════════════════════════════════
+/* ════════════════════════════════════════ */
 
 const app = initializeApp(firebaseConfig);
 const db  = getDatabase(app);
 
-const ICE = { iceServers: [
-  { urls: 'stun:stun.l.google.com:19302' },
-  { urls: 'stun:stun1.l.google.com:19302' },
-  { urls: 'stun:stun2.l.google.com:19302' }
+const ICE = { iceServers:[
+  {urls:'stun:stun.l.google.com:19302'},
+  {urls:'stun:stun1.l.google.com:19302'},
+  {urls:'stun:stun2.l.google.com:19302'}
 ]};
 
-let myUid    = null;
-let myData   = null;
-let localStream = null;
-let micOn    = true;
-let camOn    = true;
-
-// peers: { uid → { pc: RTCPeerConnection, data: {name,code}, stream: MediaStream|null } }
-let peers = {};
-
-// chamada pendente (callee esperando aceitar)
-let pendingCall = null;   // { fromUid, fromData }
-
+let myUid = null, myData = null, localStream = null;
+let micOn = true, camOn = true;
+let peers = {};         // { uid → { pc, data:{name,code}, stream } }
+let pendingCall = null; // { fromUid, fromData }
 let pendingDialCode = null;
-let callInterval    = null;
-let callSec         = 0;
+let callInterval = null, callSec = 0;
+let unsubApproval=null, unsubSignal=null, unsubDialCmd=null, unsubMonMsg=null;
+const processedOffers = new Set();
 
-let unsubApproval = null;
-let unsubSignal   = null;
-let unsubDialCmd  = null;
-let unsubMonMsg   = null;
+// ── AudioContext para ringtone ──────────────────────────────
+let audioCtx = null, ringtoneNodes = [], ringtoneInterval = null;
 
-// AudioContext para ringtone
-let audioCtx = null;
-let ringtoneNodes = [];
-let ringtoneInterval = null;
-
-const ini = n => (n||'?').trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2);
-const $   = id => document.getElementById(id);
-
-// ── UNLOCK AUDIO (deve ser chamado em interação do usuário) ──
-function unlockAudio() {
-  if (audioCtx) return;
-  try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){}
+function unlockAudio(){
+  if(audioCtx) return;
+  try{ audioCtx = new(window.AudioContext||window.webkitAudioContext)(); }catch(e){}
 }
 
-// ── RINGTONE ─────────────────────────────────────────────────
-function startRingtone() {
-  unlockAudio();
-  if (!audioCtx) return;
+function startRingtone(){
+  unlockAudio(); if(!audioCtx) return;
   stopRingtone();
-
-  function playBeep() {
-    try {
-      const osc  = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-      osc.frequency.setValueAtTime(660, audioCtx.currentTime + 0.15);
-      gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-      osc.start(audioCtx.currentTime);
-      osc.stop(audioCtx.currentTime + 0.4);
-      ringtoneNodes.push(osc);
-    } catch(e){}
+  function ring(){
+    if(!audioCtx) return;
+    try{
+      // Sequência musical: três notas curtas
+      const freqs=[880,1109,1318];
+      freqs.forEach((f,i)=>{
+        const osc=audioCtx.createOscillator();
+        const gain=audioCtx.createGain();
+        const t=audioCtx.currentTime + i*0.12;
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type='sine';
+        osc.frequency.setValueAtTime(f, t);
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.45, t+0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, t+0.11);
+        osc.start(t); osc.stop(t+0.12);
+        ringtoneNodes.push(osc);
+      });
+    }catch(e){}
   }
-
-  playBeep();
-  ringtoneInterval = setInterval(playBeep, 900);
+  ring();
+  ringtoneInterval = setInterval(ring, 1000);
 }
 
-function stopRingtone() {
-  if (ringtoneInterval) { clearInterval(ringtoneInterval); ringtoneInterval = null; }
-  ringtoneNodes.forEach(n => { try { n.stop(); } catch(e){} });
-  ringtoneNodes = [];
+function stopRingtone(){
+  if(ringtoneInterval){clearInterval(ringtoneInterval);ringtoneInterval=null;}
+  ringtoneNodes.forEach(n=>{try{n.stop();}catch(e){}});
+  ringtoneNodes=[];
 }
 
-// ── SHOW ─────────────────────────────────────────────────────
-function show(id) {
-  ['sCad','sAgu','sMain'].forEach(s => {
-    $(s).style.display = 'none';
-  });
-  $(id).style.display = 'flex';
+// Som de conexão estabelecida
+function playConnectSound(){
+  unlockAudio(); if(!audioCtx) return;
+  try{
+    const osc=audioCtx.createOscillator();
+    const gain=audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type='sine';
+    osc.frequency.setValueAtTime(523, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(659, audioCtx.currentTime+0.1);
+    osc.frequency.setValueAtTime(784, audioCtx.currentTime+0.2);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.5);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime+0.5);
+  }catch(e){}
 }
 
-function toast(msg, dur=3500) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), dur);
+// Som de desconexão
+function playDisconnectSound(){
+  unlockAudio(); if(!audioCtx) return;
+  try{
+    const osc=audioCtx.createOscillator();
+    const gain=audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type='sine';
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(330, audioCtx.currentTime+0.15);
+    osc.frequency.setValueAtTime(220, audioCtx.currentTime+0.3);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.55);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime+0.55);
+  }catch(e){}
 }
 
-function saveLocal() { localStorage.setItem('tp_v5', JSON.stringify({uid:myUid, data:myData})); }
-function clearLocal() { localStorage.removeItem('tp_v5'); myUid = null; myData = null; }
+// ── Utilitários ─────────────────────────────────────────────
+const ini = n=>(n||'?').trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2);
+const $   = id=>document.getElementById(id);
 
-// ── INIT ──────────────────────────────────────────────────────
-async function init() {
-  const saved = localStorage.getItem('tp_v5');
-  if (saved) {
-    try {
-      const {uid, data} = JSON.parse(saved);
-      myUid = uid; myData = data;
-      const snap = await get(ref(db,'users/'+myUid));
-      if (!snap.exists()) { clearLocal(); show('sCad'); return; }
-      myData = snap.val(); saveLocal();
-      if (myData.blocked)   { toast('Acesso bloqueado'); clearLocal(); show('sCad'); return; }
-      if (!myData.approved) { esperarAprovacao(); return; }
+function show(id){
+  ['sCad','sAgu','sMain'].forEach(s=>{$(s).style.display='none';});
+  $(id).style.display='flex';
+}
+function toast(msg,dur=3500){
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),dur);
+}
+function saveLocal(){localStorage.setItem('tp_v6',JSON.stringify({uid:myUid,data:myData}));}
+function clearLocal(){localStorage.removeItem('tp_v6');myUid=null;myData=null;}
+
+// ── INIT ────────────────────────────────────────────────────
+async function init(){
+  const saved=localStorage.getItem('tp_v6');
+  if(saved){
+    try{
+      const {uid,data}=JSON.parse(saved);
+      myUid=uid; myData=data;
+      const snap=await get(ref(db,'users/'+myUid));
+      if(!snap.exists()){clearLocal();show('sCad');return;}
+      myData=snap.val(); saveLocal();
+      if(myData.blocked){toast('Acesso bloqueado');clearLocal();show('sCad');return;}
+      if(!myData.approved){esperarAprovacao();return;}
       entrarMain();
-    } catch(e) { clearLocal(); show('sCad'); }
-  } else { show('sCad'); }
+    }catch(e){clearLocal();show('sCad');}
+  } else {show('sCad');}
 }
 
-// ── CADASTRO ─────────────────────────────────────────────────
-window.cadastrar = async function() {
+// ── CADASTRO ────────────────────────────────────────────────
+window.cadastrar = async function(){
   unlockAudio();
-  const nome = $('iNome').value.trim();
-  const tel  = $('iTel').value.trim();
-  if (!nome || !tel) { toast('Preencha nome e telefone'); return; }
-
-  const btn = $('btnCad');
-  btn.disabled = true; btn.textContent = 'Enviando...';
-
-  try {
-    const allSnap = await get(ref(db,'users'));
-    let usedCodes = [];
-
-    if (allSnap.exists()) {
-      const all = allSnap.val();
-      const ex = Object.entries(all).find(([k,v]) => v.phone === tel);
-      if (ex) {
-        const [uid, u] = ex; myUid=uid; myData=u; saveLocal();
-        if (u.blocked)   { toast('Acesso bloqueado'); clearLocal(); return; }
-        if (!u.approved) { esperarAprovacao(); return; }
+  const nome=$('iNome').value.trim();
+  const tel=$('iTel').value.trim();
+  if(!nome||!tel){toast('Preencha nome e telefone');return;}
+  const btn=$('btnCad');
+  btn.disabled=true; btn.textContent='Enviando...';
+  try{
+    const allSnap=await get(ref(db,'users'));
+    let usedCodes=[];
+    if(allSnap.exists()){
+      const all=allSnap.val();
+      const ex=Object.entries(all).find(([k,v])=>v.phone===tel);
+      if(ex){
+        const [uid,u]=ex; myUid=uid; myData=u; saveLocal();
+        if(u.blocked){toast('Acesso bloqueado');clearLocal();return;}
+        if(!u.approved){esperarAprovacao();return;}
         entrarMain(); return;
       }
-      usedCodes = Object.values(all).map(u=>u.code).filter(Boolean);
+      usedCodes=Object.values(all).map(u=>u.code).filter(Boolean);
     }
-
-    let code = null;
-    for (let i=1; i<=100; i++) { if (!usedCodes.includes(i)) { code=i; break; } }
-    if (!code) { toast('Limite de 100 usuários atingido'); return; }
-
-    const newRef  = push(ref(db,'users'));
-    myUid         = newRef.key;
-    myData        = { name:nome, phone:tel, code, approved:false, blocked:false, online:false, createdAt:Date.now() };
-    await set(newRef, myData);
+    let code=null;
+    for(let i=1;i<=100;i++){if(!usedCodes.includes(i)){code=i;break;}}
+    if(!code){toast('Limite de 100 usuários atingido');return;}
+    const newRef=push(ref(db,'users'));
+    myUid=newRef.key;
+    myData={name:nome,phone:tel,code,approved:false,blocked:false,online:false,createdAt:Date.now()};
+    await set(newRef,myData);
     saveLocal();
     esperarAprovacao();
-  } catch(err) {
-    toast('Erro ao cadastrar. Tente novamente.');
-    console.error(err);
-  } finally {
-    btn.disabled = false; btn.textContent = 'Solicitar acesso';
-  }
+  }catch(err){toast('Erro ao cadastrar. Tente novamente.');console.error(err);}
+  finally{btn.disabled=false;btn.textContent='Solicitar acesso';}
 };
 
-// ── AGUARDAR APROVAÇÃO ────────────────────────────────────────
-function esperarAprovacao() {
+function esperarAprovacao(){
   show('sAgu');
-  if (unsubApproval) { unsubApproval(); unsubApproval=null; }
-  unsubApproval = onValue(ref(db,'users/'+myUid), snap => {
-    if (!snap.exists()) { clearLocal(); show('sCad'); return; }
-    const u = snap.val(); myData=u; saveLocal();
-    if (u.blocked) { toast('Acesso bloqueado'); clearLocal(); show('sCad'); return; }
-    if (u.approved) {
-      if (unsubApproval) { unsubApproval(); unsubApproval=null; }
-      entrarMain();
-    }
+  if(unsubApproval){unsubApproval();unsubApproval=null;}
+  unsubApproval=onValue(ref(db,'users/'+myUid),snap=>{
+    if(!snap.exists()){clearLocal();show('sCad');return;}
+    const u=snap.val(); myData=u; saveLocal();
+    if(u.blocked){toast('Acesso bloqueado');clearLocal();show('sCad');return;}
+    if(u.approved){if(unsubApproval){unsubApproval();unsubApproval=null;}entrarMain();}
   });
 }
 
-window.cancelarCad = async function() {
-  if (myUid) await remove(ref(db,'users/'+myUid));
+window.cancelarCad = async function(){
+  if(myUid) await remove(ref(db,'users/'+myUid));
   clearLocal(); $('iNome').value=''; $('iTel').value=''; show('sCad');
 };
 
-// ── ENTRAR NA TELA PRINCIPAL ──────────────────────────────────
-async function entrarMain() {
-  await update(ref(db,'users/'+myUid), {online:true});
-  $('topAv').textContent   = ini(myData.name);
-  $('topNome').textContent = myData.name;
-  $('topCod').textContent  = 'Código: #'+myData.code;
+// ── ENTRAR MAIN ──────────────────────────────────────────────
+async function entrarMain(){
+  await update(ref(db,'users/'+myUid),{online:true});
+  $('topAv').textContent=ini(myData.name);
+  $('topNome').textContent=myData.name;
+  $('topCod').textContent='#'+myData.code;
   show('sMain');
-
-  // Pede câmera/mic imediatamente
   await abrirCamera();
   renderGrid();
   ouvirSinalizacao();
@@ -414,271 +435,234 @@ async function entrarMain() {
   ouvirMonMsg();
 }
 
-window.sair = async function() {
+window.sair = async function(){
   stopRingtone();
   encerrarTodosOsPeers();
   encerrarStream();
-  if (unsubSignal)  { unsubSignal();  unsubSignal=null; }
-  if (unsubDialCmd) { unsubDialCmd(); unsubDialCmd=null; }
-  if (unsubMonMsg)  { unsubMonMsg();  unsubMonMsg=null; }
-  await update(ref(db,'users/'+myUid), {online:false});
+  if(unsubSignal){unsubSignal();unsubSignal=null;}
+  if(unsubDialCmd){unsubDialCmd();unsubDialCmd=null;}
+  if(unsubMonMsg){unsubMonMsg();unsubMonMsg=null;}
+  await update(ref(db,'users/'+myUid),{online:false});
   clearLocal(); $('iNome').value=''; $('iTel').value=''; show('sCad');
 };
 
-// ── CÂMERA E MIC ──────────────────────────────────────────────
-async function abrirCamera() {
-  try {
-    localStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode:'user', width:{ideal:1280}, height:{ideal:720} },
-      audio: { echoCancellation:true, noiseSuppression:true }
+// ── CÂMERA ───────────────────────────────────────────────────
+async function abrirCamera(){
+  try{
+    localStream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},
+      audio:{echoCancellation:true,noiseSuppression:true,sampleRate:48000}
     });
-  } catch(e) {
-    try { localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true}); }
-    catch(e2) {
-      try { localStream = await navigator.mediaDevices.getUserMedia({audio:true}); }
-      catch(e3) { toast('Câmera/microfone indisponível'); }
+  }catch(e){
+    try{localStream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});}
+    catch(e2){
+      try{localStream=await navigator.mediaDevices.getUserMedia({audio:true});}
+      catch(e3){toast('Câmera/mic indisponível');}
     }
   }
 }
+function encerrarStream(){if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}}
 
-function encerrarStream() {
-  if (localStream) { localStream.getTracks().forEach(t=>t.stop()); localStream=null; }
-}
+// ── GRID ─────────────────────────────────────────────────────
+function renderGrid(){
+  const grid=$('videoGrid');
+  const pl=Object.entries(peers);
+  const total=1+pl.length;
+  const classes=['g1','g2','g3','g4','g5','g6','g7','g8'];
+  grid.className=classes[Math.min(total,8)-1];
+  grid.innerHTML='';
+  grid.appendChild(makeTile('self',myData,localStream,true));
+  pl.forEach(([uid,peer])=>grid.appendChild(makeTile(uid,peer.data,peer.stream,false)));
 
-// ── GRADE DE VÍDEO ────────────────────────────────────────────
-function renderGrid() {
-  const grid  = $('videoGrid');
-  const pl    = Object.entries(peers);
-  const total = 1 + pl.length;
-
-  const classes = ['g1','g2','g3','g4','g5','g6','g7','g8'];
-  grid.className = classes[Math.min(total,8)-1];
-  grid.innerHTML = '';
-
-  // Tile self
-  grid.appendChild(makeTile('self', myData, localStream, true));
-
-  // Tiles remotos
-  pl.forEach(([uid,peer]) => grid.appendChild(makeTile(uid, peer.data, peer.stream, false)));
-
-  // Barra inferior
-  if (pl.length > 0) {
-    const nomes = pl.map(([,p])=>p.data.name+' #'+p.data.code).join(', ');
-    $('callComQuem').textContent = nomes;
-    $('dialBox').style.display  = 'none';
-    $('callBar').style.display  = 'flex';
-    if (!callInterval) startTimer();
+  if(pl.length>0){
+    const nomes=pl.map(([,p])=>p.data.name+' #'+p.data.code).join(', ');
+    $('callComQuem').textContent=nomes;
+    $('dialBox').style.display='none';
+    $('callBar').style.display='flex';
+    if(!callInterval) startTimer();
   } else {
-    $('dialBox').style.display = 'block';
-    $('callBar').style.display = 'none';
+    $('dialBox').style.display='block';
+    $('callBar').style.display='none';
     stopTimer();
   }
 }
 
-function makeTile(uid, data, stream, isSelf) {
-  const tile = document.createElement('div');
-  tile.className = 'v-tile' + (isSelf?' self':'');
-  tile.id = 'tile-'+uid;
+function makeTile(uid,data,stream,isSelf){
+  const tile=document.createElement('div');
+  tile.className='v-tile'+(isSelf?' self':'');
+  tile.id='tile-'+uid;
 
-  if (stream && stream.getVideoTracks().length > 0 && stream.getVideoTracks()[0].enabled) {
-    const v = document.createElement('video');
-    v.autoplay = true; v.playsInline = true;
-    v.muted = isSelf;          // self: mudo (evita eco); remoto: com som
-    v.srcObject = stream;
-    v.volume = isSelf ? 0 : 1;
+  const hasVideo=stream && stream.getVideoTracks().length>0 && stream.getVideoTracks()[0].enabled;
+  if(hasVideo){
+    const v=document.createElement('video');
+    v.autoplay=true; v.playsInline=true;
+    v.muted=isSelf; v.srcObject=stream;
+    v.volume=isSelf?0:1;
     tile.appendChild(v);
   } else {
-    // Sem vídeo: avatar
-    const av = document.createElement('div');
-    av.className = 'v-tile-av';
-    const circle = document.createElement('div');
-    circle.className = 'av-circle';
-    circle.textContent = data ? ini(data.name) : '?';
-    const nm = document.createElement('div');
-    nm.className = 'av-nm';
-    nm.textContent = data ? (isSelf?'Você':data.name) : '...';
-    av.appendChild(circle); av.appendChild(nm);
+    const av=document.createElement('div');
+    av.className='v-tile-av';
+    const circ=document.createElement('div');
+    circ.className='av-circle';
+    circ.textContent=data?ini(data.name):'?';
+    const nm=document.createElement('div');
+    nm.className='av-nm';
+    nm.textContent=data?(isSelf?'Você':data.name):'...';
+    av.appendChild(circ); av.appendChild(nm);
     tile.appendChild(av);
-
-    // Se há stream mas sem vídeo, ainda conecta o áudio
-    if (stream && !isSelf) {
-      const a = document.createElement('audio');
-      a.autoplay = true;
-      a.srcObject = stream;
-      a.volume = 1;
+    if(stream && !isSelf){
+      const a=document.createElement('audio');
+      a.autoplay=true; a.srcObject=stream; a.volume=1;
       tile.appendChild(a);
     }
   }
 
-  const lbl = document.createElement('div');
-  lbl.className = 'v-tile-label';
-  lbl.textContent = data ? (isSelf?'Você':data.name+' #'+data.code) : '...';
+  const lbl=document.createElement('div');
+  lbl.className='v-tile-label';
+  lbl.textContent=data?(isSelf?'Você':data.name+' #'+data.code):'...';
   tile.appendChild(lbl);
   return tile;
 }
 
-// ── TIMER ─────────────────────────────────────────────────────
-function startTimer() {
-  callSec = 0;
-  callInterval = setInterval(() => {
+// ── TIMER ────────────────────────────────────────────────────
+function startTimer(){
+  callSec=0;
+  callInterval=setInterval(()=>{
     callSec++;
-    const m = String(Math.floor(callSec/60)).padStart(2,'0');
-    const s = String(callSec%60).padStart(2,'0');
-    $('callTimer').textContent = m+':'+s;
-  }, 1000);
+    const m=String(Math.floor(callSec/60)).padStart(2,'0');
+    const s=String(callSec%60).padStart(2,'0');
+    $('callTimer').textContent=m+':'+s;
+  },1000);
 }
-function stopTimer() {
-  clearInterval(callInterval); callInterval=null;
-  $('callTimer').textContent = '00:00';
-}
+function stopTimer(){clearInterval(callInterval);callInterval=null;$('callTimer').textContent='00:00';}
 
-// ── DISCAGEM ──────────────────────────────────────────────────
-window.discar = async function() {
+// ── DISCAR ───────────────────────────────────────────────────
+window.discar = async function(){
   unlockAudio();
-  const n = parseInt($('dialInp').value);
-  if (!n||n<1||n>100) { toast('Digite um número de 1 a 100'); return; }
-  if (n === myData.code) { toast('Você não pode ligar para si mesmo'); return; }
-  if (Object.keys(peers).length >= 7) { toast('Máximo de 8 participantes'); return; }
-
-  const allSnap = await get(ref(db,'users'));
-  if (!allSnap.exists()) { toast('Nenhum usuário encontrado'); return; }
-
-  const entry = Object.entries(allSnap.val())
-    .find(([k,v]) => v.code===n && v.approved && !v.blocked);
-  if (!entry) { toast('Código #'+n+' não encontrado'); return; }
-
-  const [tUid, tData] = entry;
-  if (peers[tUid]) { toast('Já conectado com #'+n); return; }
-
-  $('dialInp').value = '';
-  toast('📞 Chamando #'+n+'...');
-  await iniciarWebRTC(tUid, tData, true);
+  const n=parseInt($('dialInp').value);
+  if(!n||n<1||n>100){toast('Digite um código de 1 a 100');return;}
+  if(n===myData.code){toast('Não pode ligar para si mesmo');return;}
+  if(Object.keys(peers).length>=7){toast('Máximo de 8 participantes');return;}
+  const allSnap=await get(ref(db,'users'));
+  if(!allSnap.exists()){toast('Nenhum usuário encontrado');return;}
+  const entry=Object.entries(allSnap.val()).find(([k,v])=>v.code===n&&v.approved&&!v.blocked);
+  if(!entry){toast('Código #'+n+' não encontrado ou offline');return;}
+  const [tUid,tData]=entry;
+  if(peers[tUid]){toast('Já conectado com #'+n);return;}
+  $('dialInp').value='';
+  toast('📞 Chamando '+tData.name+' #'+n+'...');
+  await iniciarWebRTC(tUid,tData,true);
 };
 
-// ── NÚMERO DO MONITOR ────────────────────────────────────────
-function ouvirDialCmd() {
-  if (unsubDialCmd) { unsubDialCmd(); unsubDialCmd=null; }
-  unsubDialCmd = onValue(ref(db,'dial_command/'+myUid), async snap => {
-    if (!snap.exists()) return;
-    const cmd = snap.val();
-    if (!cmd||!cmd.code) return;
+// ── DIAL CMD DO MONITOR ──────────────────────────────────────
+function ouvirDialCmd(){
+  if(unsubDialCmd){unsubDialCmd();unsubDialCmd=null;}
+  unsubDialCmd=onValue(ref(db,'dial_command/'+myUid),async snap=>{
+    if(!snap.exists()) return;
+    const cmd=snap.val();
+    if(!cmd||!cmd.code) return;
     await remove(ref(db,'dial_command/'+myUid));
-    pendingDialCode = cmd.code;
-    $('nnCode').textContent = '#'+cmd.code;
-    $('numNotify').style.display = 'block';
+    pendingDialCode=cmd.code;
+    $('nnCode').textContent='#'+cmd.code;
+    $('numNotify').style.display='block';
+    startRingtone(); // toca o ringtone ao receber número
   });
 }
-
-window.aceitarNumero = async function() {
+window.aceitarNumero = async function(){
+  stopRingtone();
   $('numNotify').style.display='none';
-  if (pendingDialCode) {
-    $('dialInp').value = pendingDialCode;
-    pendingDialCode = null;
+  if(pendingDialCode){
+    $('dialInp').value=pendingDialCode;
+    pendingDialCode=null;
     await window.discar();
   }
 };
-window.dispensarNumero = function() {
-  $('numNotify').style.display='none'; pendingDialCode=null;
+window.dispensarNumero = function(){
+  stopRingtone();
+  $('numNotify').style.display='none';
+  pendingDialCode=null;
 };
 
-// ── MENSAGEM DO MONITOR ───────────────────────────────────────
-function ouvirMonMsg() {
-  if (unsubMonMsg) { unsubMonMsg(); unsubMonMsg=null; }
-  unsubMonMsg = onValue(ref(db,'monitor_msg/'+myUid), snap => {
-    if (!snap.exists()) return;
-    const m = snap.val();
-    if (m&&m.text) toast('📩 Monitor: '+m.text, 5000);
+// ── MSG DO MONITOR ───────────────────────────────────────────
+function ouvirMonMsg(){
+  if(unsubMonMsg){unsubMonMsg();unsubMonMsg=null;}
+  unsubMonMsg=onValue(ref(db,'monitor_msg/'+myUid),snap=>{
+    if(!snap.exists()) return;
+    const m=snap.val();
+    if(m&&m.text) toast('📩 Monitor: '+m.text,5000);
   });
 }
 
 // ══════════════════════════════════════════════════════════════
-// WebRTC — fluxo correto de sinalização
+// WebRTC — Reunião multi-peer
 // ══════════════════════════════════════════════════════════════
 
-async function iniciarWebRTC(tUid, tData, isCaller) {
-  if (peers[tUid]) return;  // já existe
+async function iniciarWebRTC(tUid,tData,isCaller){
+  if(peers[tUid]) return;
 
-  const pc = new RTCPeerConnection(ICE);
-  peers[tUid] = { pc, data:tData, stream:null };
+  const pc=new RTCPeerConnection(ICE);
+  peers[tUid]={pc,data:tData,stream:null};
 
-  // 1. Adicionar tracks locais ANTES de criar offer/answer
-  if (localStream) {
-    localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+  if(localStream){
+    localStream.getTracks().forEach(track=>pc.addTrack(track,localStream));
   }
 
-  // 2. Quando chegam tracks remotos → mostrar no tile
-  pc.ontrack = evt => {
-    if (!peers[tUid]) return;
-    const remoteStream = evt.streams[0] || new MediaStream([evt.track]);
-    peers[tUid].stream = remoteStream;
+  pc.ontrack = evt=>{
+    if(!peers[tUid]) return;
+    const remoteStream=evt.streams[0]||new MediaStream([evt.track]);
+    peers[tUid].stream=remoteStream;
     renderGrid();
   };
 
-  // 3. ICE candidates → enviar para o outro
-  pc.onicecandidate = evt => {
-    if (evt.candidate) {
-      push(ref(db,'signal/'+tUid+'/ice_'+myUid), { c: JSON.stringify(evt.candidate) });
+  pc.onicecandidate = evt=>{
+    if(evt.candidate){
+      push(ref(db,'signal/'+tUid+'/ice_'+myUid),{c:JSON.stringify(evt.candidate)});
     }
   };
 
-  // 4. Detectar desconexão
-  pc.onconnectionstatechange = () => {
-    const s = pc.connectionState;
-    if (s==='connected') toast('✅ Conectado com '+tData.name);
-    if (s==='disconnected'||s==='failed'||s==='closed') {
+  pc.onconnectionstatechange = ()=>{
+    const s=pc.connectionState;
+    if(s==='connected'){playConnectSound();toast('✅ Conectado com '+tData.name);}
+    if(s==='disconnected'||s==='failed'||s==='closed'){
+      playDisconnectSound();
       toast('📵 '+tData.name+' desconectou');
       encerrarPeer(tUid);
     }
   };
 
-  // Limpar ICE antigo
   await remove(ref(db,'signal/'+myUid+'/ice_'+tUid));
 
-  if (isCaller) {
-    // ── CALLER ─────────────────────────────────────────────
-    const offer = await pc.createOffer({ offerToReceiveAudio:true, offerToReceiveVideo:true });
+  if(isCaller){
+    const offer=await pc.createOffer({offerToReceiveAudio:true,offerToReceiveVideo:true});
     await pc.setLocalDescription(offer);
-
-    // Escreve offer para o callee
-    await set(ref(db,'signal/'+tUid+'/offer_'+myUid), {
-      sdp:  JSON.stringify(pc.localDescription),
-      name: myData.name,
-      code: myData.code
+    await set(ref(db,'signal/'+tUid+'/offer_'+myUid),{
+      sdp:JSON.stringify(pc.localDescription),
+      name:myData.name,code:myData.code
     });
-
-    // Espera answer do callee
-    const answerRef = ref(db,'signal/'+myUid+'/answer_'+tUid);
-    const unsubAns = onValue(answerRef, async snap => {
-      if (!snap.exists()) return;
-      if (pc.signalingState !== 'have-local-offer') return;
-      try {
+    const ansRef=ref(db,'signal/'+myUid+'/answer_'+tUid);
+    const unsubAns=onValue(ansRef,async snap=>{
+      if(!snap.exists()) return;
+      if(pc.signalingState!=='have-local-offer') return;
+      try{
         await pc.setRemoteDescription(JSON.parse(snap.val().sdp));
-        unsubAns();  // parar de ouvir após receber
-      } catch(e) { console.error('setRemoteDescription (answer):', e); }
+        unsubAns();
+      }catch(e){console.error('setRemoteDescription answer:',e);}
     });
-
   } else {
-    // ── CALLEE ─────────────────────────────────────────────
-    const offerSnap = await get(ref(db,'signal/'+myUid+'/offer_'+tUid));
-    if (!offerSnap.exists()) { delete peers[tUid]; return; }
-
-    const { sdp } = offerSnap.val();
+    const offerSnap=await get(ref(db,'signal/'+myUid+'/offer_'+tUid));
+    if(!offerSnap.exists()){delete peers[tUid];return;}
+    const {sdp}=offerSnap.val();
     await pc.setRemoteDescription(JSON.parse(sdp));
-
-    const answer = await pc.createAnswer();
+    const answer=await pc.createAnswer();
     await pc.setLocalDescription(answer);
-
-    // Escreve answer para o caller
-    await set(ref(db,'signal/'+tUid+'/answer_'+myUid), {
-      sdp: JSON.stringify(pc.localDescription)
-    });
+    await set(ref(db,'signal/'+tUid+'/answer_'+myUid),{sdp:JSON.stringify(pc.localDescription)});
   }
 
-  // 5. Ouvir ICE candidates do outro lado
-  onValue(ref(db,'signal/'+myUid+'/ice_'+tUid), snap => {
-    if (!snap.exists()||!peers[tUid]) return;
-    Object.values(snap.val()).forEach(item => {
-      if (!item.c) return;
+  // Ouvir ICE candidates do outro lado
+  onValue(ref(db,'signal/'+myUid+'/ice_'+tUid),snap=>{
+    if(!snap.exists()||!peers[tUid]) return;
+    Object.values(snap.val()).forEach(item=>{
+      if(!item.c) return;
       pc.addIceCandidate(new RTCIceCandidate(JSON.parse(item.c))).catch(()=>{});
     });
   });
@@ -686,67 +670,54 @@ async function iniciarWebRTC(tUid, tData, isCaller) {
   renderGrid();
 }
 
-// ── OUVIR CHAMADAS ENTRANTES ──────────────────────────────────
-function ouvirSinalizacao() {
-  if (unsubSignal) { unsubSignal(); unsubSignal=null; }
+// ── OUVIR CHAMADAS ENTRANTES ─────────────────────────────────
+function ouvirSinalizacao(){
+  if(unsubSignal){unsubSignal();unsubSignal=null;}
 
-  // Rastrear offers já processadas para não repetir
-  const processedOffers = new Set();
-
-  unsubSignal = onValue(ref(db,'signal/'+myUid), async snap => {
-    if (!snap.exists()) return;
-    const data = snap.val();
-
-    for (const key of Object.keys(data)) {
-      if (!key.startsWith('offer_')) continue;
-      if (processedOffers.has(key)) continue;
-
-      const fromUid  = key.replace('offer_','');
-      if (peers[fromUid]) continue;  // já conectado
-      if (Object.keys(peers).length >= 7) { toast('Chamada recusada: máximo atingido'); continue; }
-
+  unsubSignal=onValue(ref(db,'signal/'+myUid),async snap=>{
+    if(!snap.exists()) return;
+    const data=snap.val();
+    for(const key of Object.keys(data)){
+      if(!key.startsWith('offer_')) continue;
+      if(processedOffers.has(key)) continue;
+      const fromUid=key.replace('offer_','');
+      if(peers[fromUid]) continue;
+      if(Object.keys(peers).length>=7){toast('Chamada recusada: sala cheia');continue;}
       processedOffers.add(key);
-      const { name, code } = data[key];
-
-      // Mostrar tela de chamada entrante com ringtone
-      pendingCall = { fromUid, fromData: { name, code } };
-      $('icName').textContent = name + ' #' + code;
-      $('incomingCall').style.display = 'flex';
+      const {name,code}=data[key];
+      pendingCall={fromUid,fromData:{name,code}};
+      $('icAv').textContent=ini(name);
+      $('icName').textContent=name+' #'+code;
+      $('incomingCall').style.display='flex';
       startRingtone();
     }
   });
 }
 
-// Aceitar chamada
-window.aceitarChamada = async function() {
-  unlockAudio();
-  stopRingtone();
-  $('incomingCall').style.display = 'none';
-  if (!pendingCall) return;
-  const { fromUid, fromData } = pendingCall;
-  pendingCall = null;
-  await iniciarWebRTC(fromUid, fromData, false);
+window.aceitarChamada = async function(){
+  unlockAudio(); stopRingtone();
+  $('incomingCall').style.display='none';
+  if(!pendingCall) return;
+  const {fromUid,fromData}=pendingCall;
+  pendingCall=null;
+  await iniciarWebRTC(fromUid,fromData,false);
 };
 
-// Rejeitar chamada
-window.rejeitarChamada = async function() {
+window.rejeitarChamada = async function(){
   stopRingtone();
-  $('incomingCall').style.display = 'none';
-  if (!pendingCall) return;
-  const { fromUid } = pendingCall;
-  pendingCall = null;
-  // Limpar sinalização para que o caller saiba
+  $('incomingCall').style.display='none';
+  if(!pendingCall) return;
+  const {fromUid}=pendingCall;
+  pendingCall=null;
   await remove(ref(db,'signal/'+myUid+'/offer_'+fromUid));
   toast('Chamada rejeitada');
 };
 
-// ── ENCERRAR PEER ─────────────────────────────────────────────
-async function encerrarPeer(tUid) {
-  if (!peers[tUid]) return;
-  try { peers[tUid].pc.close(); } catch(e){}
+// ── ENCERRAR PEER ────────────────────────────────────────────
+async function encerrarPeer(tUid){
+  if(!peers[tUid]) return;
+  try{peers[tUid].pc.close();}catch(e){}
   delete peers[tUid];
-
-  // Limpar sinalização
   await Promise.all([
     remove(ref(db,'signal/'+tUid+'/offer_'+myUid)),
     remove(ref(db,'signal/'+tUid+'/answer_'+myUid)),
@@ -755,40 +726,30 @@ async function encerrarPeer(tUid) {
     remove(ref(db,'signal/'+myUid+'/ice_'+tUid)),
     remove(ref(db,'signal/'+tUid+'/ice_'+myUid))
   ]).catch(()=>{});
-
   renderGrid();
 }
+function encerrarTodosOsPeers(){Object.keys(peers).forEach(uid=>encerrarPeer(uid));}
+window.encerrarTodos = encerrarTodosOsPeers;
 
-function encerrarTodosOsPeers() {
-  Object.keys(peers).forEach(uid => encerrarPeer(uid));
-}
-
-window.encerrarTodos = function() {
-  encerrarTodosOsPeers();
+// ── MIC / CAM ─────────────────────────────────────────────────
+window.toggleMic = function(){
+  micOn=!micOn;
+  if(localStream) localStream.getAudioTracks().forEach(t=>t.enabled=micOn);
+  $('btnMic').classList.toggle('off',!micOn);
+  $('btnMic').title=micOn?'Silenciar':'Ativar microfone';
 };
-
-// ── CONTROLES MIC / CAM ───────────────────────────────────────
-window.toggleMic = function() {
-  micOn = !micOn;
-  if (localStream) localStream.getAudioTracks().forEach(t => t.enabled = micOn);
-  $('btnMic').classList.toggle('off', !micOn);
-  $('btnMic').title = micOn ? 'Silenciar' : 'Ativar microfone';
-};
-
-window.toggleCam = function() {
-  camOn = !camOn;
-  if (localStream) localStream.getVideoTracks().forEach(t => t.enabled = camOn);
-  $('btnCam').classList.toggle('off', !camOn);
-  $('btnCam').title = camOn ? 'Desligar câmera' : 'Ligar câmera';
+window.toggleCam = function(){
+  camOn=!camOn;
+  if(localStream) localStream.getVideoTracks().forEach(t=>t.enabled=camOn);
+  $('btnCam').classList.toggle('off',!camOn);
+  $('btnCam').title=camOn?'Desligar câmera':'Ligar câmera';
   renderGrid();
 };
 
-// ── BEFOREUNLOAD ──────────────────────────────────────────────
-window.addEventListener('beforeunload', () => {
-  if (myUid) update(ref(db,'users/'+myUid), {online:false});
+window.addEventListener('beforeunload',()=>{
+  if(myUid) update(ref(db,'users/'+myUid),{online:false});
 });
 
-// Iniciar
 init();
 </script>
 </body>
