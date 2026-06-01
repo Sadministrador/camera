@@ -426,7 +426,7 @@ async function entrarMain(){
   await update(ref(db,'users/'+myUid),{online:true});
   $('topAv').textContent=ini(myData.name);
   $('topNome').textContent=myData.name;
-  $('topCod').textContent='#'+myData.code;
+  $('topCod').textContent='Código: '+myData.code;
   show('sMain');
   await abrirCamera();
   renderGrid();
@@ -475,7 +475,7 @@ function renderGrid(){
   pl.forEach(([uid,peer])=>grid.appendChild(makeTile(uid,peer.data,peer.stream,false)));
 
   if(pl.length>0){
-    const nomes=pl.map(([,p])=>p.data.name+' #'+p.data.code).join(', ');
+    const nomes=pl.map(([,p])=>p.data.name+' '+p.data.code).join(', ');
     $('callComQuem').textContent=nomes;
     $('dialBox').style.display='none';
     $('callBar').style.display='flex';
@@ -519,7 +519,7 @@ function makeTile(uid,data,stream,isSelf){
 
   const lbl=document.createElement('div');
   lbl.className='v-tile-label';
-  lbl.textContent=data?(isSelf?'Você':data.name+' #'+data.code):'...';
+  lbl.textContent=data?(isSelf?'Você':data.name+' '+data.code):'...';
   tile.appendChild(lbl);
   return tile;
 }
@@ -548,9 +548,9 @@ window.discar = async function(){
   const entry=Object.entries(allSnap.val()).find(([k,v])=>v.code===n&&v.approved&&!v.blocked);
   if(!entry){toast('Código #'+n+' não encontrado ou offline');return;}
   const [tUid,tData]=entry;
-  if(peers[tUid]){toast('Já conectado com #'+n);return;}
+  if(peers[tUid]){toast('Já conectado com '+n);return;}
   $('dialInp').value='';
-  toast('📞 Chamando '+tData.name+' #'+n+'...');
+  toast('📞 Chamando '+tData.name+' '+n+'...');
   await iniciarWebRTC(tUid,tData,true);
 };
 
@@ -563,7 +563,7 @@ function ouvirDialCmd(){
     if(!cmd||!cmd.code) return;
     await remove(ref(db,'dial_command/'+myUid));
     pendingDialCode=cmd.code;
-    $('nnCode').textContent='#'+cmd.code;
+    $('nnCode').textContent=cmd.code;
     $('numNotify').style.display='block';
     startRingtone(); // toca o ringtone ao receber número
   });
@@ -687,7 +687,7 @@ function ouvirSinalizacao(){
       const {name,code}=data[key];
       pendingCall={fromUid,fromData:{name,code}};
       $('icAv').textContent=ini(name);
-      $('icName').textContent=name+' #'+code;
+      $('icName').textContent=name+' '+code;
       $('incomingCall').style.display='flex';
       startRingtone();
     }
